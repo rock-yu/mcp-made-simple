@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-// Define tool schema
+// 1. Tool Schema
 export const GreetingToolSchema = z.object({
   name: z.string(),
 });
 
-// Tool definition for listing
+// 2. Tool listing information
 export const greetingToolDefinition = {
   name: "greeting",
   description: "Returns a greeting message",
@@ -21,7 +21,7 @@ export const greetingToolDefinition = {
   },
 };
 
-// Tool implementation
+// 3. Tool implementation
 export const handleGreeting = (args: unknown) => {
   const validated = GreetingToolSchema.parse(args);
   const { name } = validated;
