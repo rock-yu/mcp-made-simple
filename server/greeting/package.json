@@ -1,5 +1,5 @@
 {
-  "name": "hello-world-mcp",
+  "name": "mcp-hello-world-server",
   "version": "1.0.0",
   "type": "module",
   "main": "build/index.js",
@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "A simple Hello World MCP server",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.0",

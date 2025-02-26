@@ -10,13 +10,13 @@ import { greetingToolDefinition, handleGreeting } from "./tools/greeting.js";
 
 /**
  * A simple Hello World MCP server with one tool:
- *   1) Greeting
+ *   1) Greeting - Returns a greeting for a specified user name.
  */
 
 // 1. Create an MCP server instance
 const server = new Server(
   {
-    name: "hello-world",
+    name: "mcp-hello-world",
     version: "1.0.0",
   },
   {
