@@ -14,18 +14,11 @@ This repository serves as a minimal, beginner-friendly example for developers lo
 
 ## Repository Structure
 
-This project consists of two main components:
-
-### 1. Server (`/server`)
-
 A simple TypeScript MCP server that implements:
+
 - A single "greeting" tool that takes a name and returns a personalized greeting
 - Standard MCP interfaces for tool discovery and execution
 - Uses the official `@modelcontextprotocol/sdk` package
-
-### 2. Client (`/client`)
-
-A minimal React application that demonstrates the frontend part of the application. This is intended to be a dummy app, which represents the main app that you would be working on, whether it's a website, landing page, saas, etc.
 
 ## Getting Started
 
@@ -36,14 +29,6 @@ cd server/greeting
 npm install
 npm run build
 npm start
-```
-
-### Client Setup
-
-```bash
-cd client
-npm install
-npm run dev
 ```
 
 ## How It Works
