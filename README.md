@@ -25,7 +25,7 @@ A simple TypeScript MCP server that implements:
 
 ### 2. Client (`/client`)
 
-A minimal React application that demonstrates the frontend part of the application.
+A minimal React application that demonstrates the frontend part of the application. This is intended to be a dummy app, which represents the main app that you would be working on, whether it's a website, landing page, saas, etc.
 
 ## Getting Started
 
