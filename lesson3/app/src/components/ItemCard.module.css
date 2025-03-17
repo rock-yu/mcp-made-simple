@@ -1,6 +1,6 @@
 .card {
   background-color: #2a2a2a;
-  border: 2px solid;
+  border: 2px solid #4a4a4a;
   border-radius: 8px;
   padding: 16px;
   width: 200px;
@@ -11,6 +11,7 @@
 
 .card:hover {
   transform: translateY(-4px);
+  border-color: #6a6a6a;
 }
 
 .name {
@@ -23,17 +24,4 @@
 .quantity {
   color: #cccccc;
   font-size: 1em;
-  margin-bottom: 12px;
-}
-
-.rarity {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 4px 8px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 6px;
-  font-size: 0.8em;
-  font-weight: bold;
-  color: white;
 }
