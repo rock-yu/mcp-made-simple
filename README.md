@@ -15,11 +15,11 @@ The Model Context Protocol (MCP) is a standardized protocol that allows AI assis
 |--------|-------|-------------|--------------|-------|
 | [Lesson 1](./lesson1/) | Creating Your First MCP Server | Build a basic MCP server with a greeting tool | - MCP Server Setup<br>- Tool Implementation<br>- IDE Integration<br>- stdio Transport | [Watch Tutorial](https://www.youtube.com/watch?v=rcjdfhhb6ZU) |
 | [Lesson 2](./lesson2/) | Debugging with Chrome DevTools and Cursor |Debugging your apps with Browser Tools MCP | - Capture Console Logs <br>- Take Screenshots<br>-Integration with Cursor | [Watch Tutorial](https://www.youtube.com/watch?v=g08kmknV5Sg) |
+| [Lesson 3](./lesson3/) | Game Inventory with Supabase | Build a game inventory system using Supabase | - Database Operations<br>- Supabase Integration<br>- React UI<br>- Real-time Updates | Coming Soon |
 
 ## Playlist
 
 [Watch the full playlist](https://www.youtube.com/playlist?list=PLWUH7ke1DYK_Tnvi9PPy67LCkoeKSKGbe)
-
 
 ## Prerequisites
 
@@ -27,6 +27,7 @@ The Model Context Protocol (MCP) is a standardized protocol that allows AI assis
 - Basic TypeScript knowledge
 - IDE with MCP support (Cursor, Windsurf, or VS Code)
 - Chrome browser (for Lesson 2)
+- Supabase account (for Lesson 3)
 
 ## Getting Started
 
