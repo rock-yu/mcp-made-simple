@@ -2,7 +2,7 @@
 
 /**
  * Stage 3: Adding Rarity and Customization
- * 
+ *
  * In this stage, we enhance our game items with:
  * 1. Rarity levels (common to legendary)
  * 2. Visual customization based on rarity
@@ -10,14 +10,6 @@
  */
 
 export type ItemRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
-
-export interface GameItem {
-  id: string;
-  name: string;
-  quantity: number;
-  created_at: string;
-  rarity: ItemRarity;
-}
 
 // Rarity color mapping for UI customization
 export const RARITY_COLORS: Record<ItemRarity, string> = {
@@ -36,3 +28,17 @@ export const RARITY_WEIGHTS = {
   epic: 0.07,       // 7% chance
   legendary: 0.03   // 3% chance
 };
+
+
+/**
+ * Stage 1: Basic Game Item Model
+ *
+ * The core model for a game item.
+ */
+export interface GameItem {
+  id: string;
+  name: string;
+  quantity: number;
+  created_at: string;
+  // rarity: ItemRarity; -- Part 3.
+}

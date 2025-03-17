@@ -1,82 +1,39 @@
 /**
- * Stage 3: Demo Data with Rarity
+ * Demo Data Evolution:
  *
- * This file provides sample game items with rarity levels for testing
- * and development. Each item has a carefully chosen rarity that follows
- * typical game item distribution patterns.
+ * Stage 1: Basic Items
+ * - Simple items with id, name, quantity
+ * - Used for initial React UI testing
+ *
+ * Stage 2: Database Ready
+ * - Added created_at timestamps
+ * - Matches Supabase schema
+ *
+ * Stage 3: Rarity System
+ * - Added rarity levels to each item
+ * - Balanced distribution of rarities
+ * - Used for testing rarity-based features
  */
 
 import { GameItem, ItemRarity } from './model';
 
+// Demo items evolve through stages
 export const DEMO_ITEMS: GameItem[] = [
   {
+    // Stage 1: Basic properties
     id: '1',
     name: 'Wooden Sword',
     quantity: 1,
-    rarity: 'common',
-    created_at: new Date().toISOString()
+    // Stage 2: Database tracking
+    created_at: new Date().toISOString(),
+    // Stage 3: Rarity
+    // rarity: 'common'
   },
   {
     id: '2',
-    name: 'Iron Shield',
-    quantity: 2,
-    rarity: 'uncommon',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '3',
     name: 'Health Potion',
     quantity: 5,
-    rarity: 'common',
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    // rarity: 'common'
   },
-  {
-    id: '4',
-    name: 'Magic Staff',
-    quantity: 1,
-    rarity: 'rare',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '5',
-    name: 'Leather Armor',
-    quantity: 3,
-    rarity: 'uncommon',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '6',
-    name: 'Dragon Scale Shield',
-    quantity: 1,
-    rarity: 'epic',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '7',
-    name: 'Excalibur',
-    quantity: 1,
-    rarity: 'legendary',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '8',
-    name: 'Mana Potion',
-    quantity: 4,
-    rarity: 'common',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '9',
-    name: 'Phoenix Feather',
-    quantity: 2,
-    rarity: 'epic',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '10',
-    name: 'Steel Dagger',
-    quantity: 3,
-    rarity: 'uncommon',
-    created_at: new Date().toISOString()
-  }
 ];
