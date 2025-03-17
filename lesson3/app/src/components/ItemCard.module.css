@@ -1,27 +1,43 @@
 .card {
-  background-color: #2a2a2a;
-  border: 2px solid #4a4a4a;
+  background-color: #1a1a1a;
+  border: 2px solid #333;
   border-radius: 8px;
   padding: 16px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
   width: 200px;
-  position: relative;
-  transition: transform 0.2s ease-in-out;
   cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  border-color: #6a6a6a;
+  transform: translateY(-2px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
 }
 
 .name {
+  margin: 0;
+  font-size: 1.1em;
   color: #ffffff;
-  margin: 0 0 8px 0;
-  font-size: 1.2em;
+  flex: 1;
+}
+
+.rarity {
+  font-size: 0.9em;
+  text-transform: uppercase;
   font-weight: bold;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .quantity {
   color: #cccccc;
-  font-size: 1em;
+  font-size: 0.9em;
+  margin-top: 8px;
 }
