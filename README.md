@@ -1,60 +1,37 @@
-# MCP Hello World
+# MCP Hello World Tutorial Series
 
-The simplest and easiest-to-understand example of the Model Context Protocol (MCP) implementation.
+Welcome to the Model Context Protocol (MCP) Hello World tutorial series! This repository contains step-by-step lessons to help you understand and implement MCP servers for AI-powered IDE extensions.
 
 ## What is MCP?
 
-The Model Context Protocol (MCP) is a standardized interface that allows AI assistants to interact with external tools and services. It enables AI models to:
-
+The Model Context Protocol (MCP) is a standardized protocol that allows AI assistants to interact with external tools and services in modern IDEs. It enables AI models to:
 - Discover available tools
 - Call tools with structured inputs
 - Receive structured outputs
 
-This repository serves as a minimal, beginner-friendly example for developers looking to understand and implement MCP in their own applications.
+## Lessons
 
-## Repository Structure
+| Lesson | Title | Description | Key Concepts | Video |
+|--------|-------|-------------|--------------|-------|
+| [Lesson 1](./lesson1/) | Creating Your First MCP Server | Build a basic MCP server with a greeting tool | - MCP Server Setup<br>- Tool Implementation<br>- IDE Integration<br> | [YouTube](https://www.youtube.com/watch?v=rcjdfhhb6ZU) |
 
-A simple TypeScript MCP server that implements:
+## Prerequisites
 
-- A single "greeting" tool that takes a name and returns a personalized greeting
-- Standard MCP interfaces for tool discovery and execution
-- Uses the official `@modelcontextprotocol/sdk` package
+- Node.js and npm installed
+- Basic TypeScript knowledge
+- IDE with MCP support (Cursor, Windsurf, or VS Code)
 
 ## Getting Started
 
-### Server Setup
+1. Clone this repository
+2. Navigate to the lesson you want to try
+3. Follow the lesson's README.md instructions or watch the YouTube video tutorial
 
-```bash
-cd server/greeting
-npm install
-npm run build
-npm start
-```
+## Resources
 
-## How It Works
-
-1. The MCP server defines and exposes a "greeting" tool
-2. When called, the tool takes a name parameter and returns a formatted greeting
-3. This simple example demonstrates the core MCP concepts:
-   - Tool definition with schemas
-   - Tool discovery
-   - Tool execution
-   - Structured input/output
-
-## Why This Repository?
-
-This repository is designed to be the simplest possible implementation of MCP, making it ideal for:
-
-- Developers new to MCP
-- Integration with AI assistants like Cursor, Windsurf, and Cline
-- Learning the fundamentals without unnecessary complexity
-- Using as a starting point for your own MCP implementations
-
-## Further Resources
-
-- [MCP GitHub Repository](https://github.com/modelcontextprotocol/protocol)
+- [MCP SDK Documentation](https://github.com/modelcontextprotocol/sdk)
+- [GitHub Tutorial Series](https://github.com/modelcontextprotocol/tutorial)
 - [MCP Documentation](https://modelcontextprotocol.ai/)
-- [MCP SDK Package](https://www.npmjs.com/package/@modelcontextprotocol/sdk)
 
 ## License
 
