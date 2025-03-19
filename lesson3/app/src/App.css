@@ -1,6 +1,6 @@
 :root {
   --background-color: #1a1a1a;
-  --text-color: #ffffff;
+  --text-color: #e0d0b0;
 }
 
 body {
@@ -12,7 +12,31 @@ body {
 
 .app {
   min-height: 100vh;
-  padding: 20px;
+  background: #1a1a1a url('/parchment-bg.png') repeat;
+  color: #e0d0b0;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  color: #ffd700;
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+.subtitle {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  color: #c0a080;
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0;
 }
 
 #root {

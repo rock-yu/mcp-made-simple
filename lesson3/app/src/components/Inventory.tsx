@@ -1,52 +1,72 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { GameItem } from '../api/model';
+import { GameItem, ItemOperationResult } from '../api/model';
 import { ItemCard } from './ItemCard';
 import { DEMO_ITEMS } from '../api/dummy';
 import styles from './Inventory.module.css';
-import { Database } from '../lib/database.types';
 
 export function Inventory() {
   const [items, setItems] = useState<GameItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isDemo, setIsDemo] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     fetchItems();
   }, []);
 
-  async function fetchItems() {
+  async function fetchItems(): Promise<void> {
     try {
       setLoading(true);
       setError(null);
+      setIsDemo(false);
 
       // Check if Supabase is configured
       if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
         setItems(DEMO_ITEMS);
         setError('⚠️ Using demo data - Supabase not configured');
+        setIsDemo(true);
         return;
       }
 
       const { data, error: dbError } = await supabase
         .from('items')
         .select('*')
-        .order('name');
+        .order('created_at');
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        setItems(DEMO_ITEMS);
+        setError('⚠️ Database error - Using demo data');
+        setIsDemo(true);
+        console.error('Database error:', dbError);
+        return;
+      }
 
-      setItems(data || []);
+      if (!data) {
+        setItems(DEMO_ITEMS);
+        setError('⚠️ No data received - Using demo data');
+        setIsDemo(true);
+        return;
+      }
+
+      setItems(data);
     } catch (err) {
       console.error('Error fetching items:', err);
-      setError('Failed to fetch items. Using demo data.');
       setItems(DEMO_ITEMS);
+      setError('⚠️ Unexpected error - Using demo data');
+      setIsDemo(true);
     } finally {
       setLoading(false);
     }
   }
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        <div className={styles.loadingText}>Loading inventory...</div>
+      </div>
+    );
   }
 
   return (
@@ -58,6 +78,7 @@ export function Inventory() {
             <button
               className={styles.infoButton}
               onClick={() => setShowInstructions(!showInstructions)}
+              title="Setup Instructions"
             >
               ℹ️
             </button>

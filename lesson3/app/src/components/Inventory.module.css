@@ -1,48 +1,67 @@
 .container {
-  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
+  background: rgba(20, 20, 20, 0.8);
+  border-radius: 1rem;
+  border: 2px solid #c0a080;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .title {
-  color: #ffffff;
+  color: #c0a080;
   text-align: center;
   margin-bottom: 20px;
   font-size: 2em;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  font-family: 'Crimson Text', serif;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
 }
 
 .loading {
-  color: #cccccc;
   text-align: center;
-  padding: 40px;
-  font-size: 1.2em;
+  padding: 2rem;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.5rem;
+  color: #c0a080;
+}
+
+.errorContainer {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: rgba(139, 0, 0, 0.2);
+  border: 1px solid #8b0000;
 }
 
 .error {
-  text-align: center;
-  color: #ff6b6b;
-  font-size: 1.2em;
-  padding: 40px;
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ff9999;
+  font-family: 'Crimson Text', serif;
 }
 
-.empty {
-  color: #cccccc;
-  text-align: center;
-  padding: 40px;
-  font-style: italic;
-  grid-column: 1 / -1;
+.infoButton {
+  background: none;
+  border: none;
+  color: #c0a080;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  transition: color 0.2s;
+}
+
+.infoButton:hover {
+  color: #ffd700;
 }
 
 .setup {
@@ -53,6 +72,7 @@
   max-width: 600px;
   margin: 40px auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Crimson Text', serif;
 }
 
 .setup h2 {
@@ -61,6 +81,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: 'Cinzel', serif;
 }
 
 .setup code {
@@ -82,6 +103,7 @@
 .setup ol {
   padding-left: 20px;
   line-height: 1.6;
+  font-family: 'Crimson Text', serif;
 }
 
 .setup li {
@@ -94,21 +116,7 @@
   padding: 20px;
   margin-bottom: 20px;
   text-align: left;
-}
-
-.error {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.errorContent {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #cccccc;
+  font-family: 'Crimson Text', serif;
 }
 
 .statusIcon {
@@ -126,6 +134,7 @@
   white-space: nowrap;
   min-width: 100px;
   transition: background-color 0.2s ease;
+  font-family: 'Crimson Text', serif;
 }
 
 .toggleButton:hover {
@@ -138,6 +147,7 @@
   border-radius: 4px;
   padding: 16px;
   margin-top: 16px;
+  font-family: 'Crimson Text', serif;
 }
 
 .help p {
@@ -148,6 +158,7 @@
 .help ol {
   margin: 0;
   padding-left: 20px;
+  font-family: 'Crimson Text', serif;
 }
 
 .help li {
@@ -161,6 +172,7 @@
   border-radius: 4px;
   font-family: monospace;
   font-size: 0.9em;
+  color: #c0a080;
 }
 
 .code {
@@ -172,7 +184,7 @@
   margin: 8px 0;
   display: block;
   white-space: pre;
-  color: #ffffff;
+  color: #c0a080;
 }
 
 .link {
@@ -182,4 +194,64 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+.instructions {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  font-family: 'Crimson Text', serif;
+}
+
+.instructions h3 {
+  color: #ffd700;
+  margin-top: 0;
+  font-family: 'Cinzel', serif;
+}
+
+.instructions ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  color: #e0d0b0;
+}
+
+.instructions li {
+  margin-bottom: 0.5rem;
+}
+
+.instructions code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+  font-family: monospace;
+  color: #c0a080;
+}
+
+.instructions pre {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  color: #c0a080;
+  margin: 0.5rem 0;
+}
+
+.instructions a {
+  color: #0070dd;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.instructions a:hover {
+  color: #00a0ff;
+}
+
+.empty {
+  color: #cccccc;
+  text-align: center;
+  padding: 40px;
+  font-style: italic;
+  grid-column: 1 / -1;
+  font-family: 'Crimson Text', serif;
 }

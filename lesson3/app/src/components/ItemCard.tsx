@@ -7,74 +7,12 @@ interface ItemCardProps {
 
 export function ItemCard({ item }: ItemCardProps) {
 
+  const cardClassName = `${styles.card} ${item.rarity ? styles[item.rarity] : styles.common}`;
+
   return (
-    <div className={styles.card}>
-      <div className={styles.header}>
-        <h3 className={styles.name}>{item.name}</h3>
-      </div>
-      <div className={styles.quantity}>
-        Quantity: {item.quantity}
-      </div>
+    <div className={cardClassName}>
+      <h3 className={styles.name}>{item.name}</h3>
+      <div className={styles.quantity}>{item.quantity}</div>
     </div>
   );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Version with rarity
-  // return (
-  //   <div className={styles.card} style={{ borderColor: RARITY_COLORS[item.rarity] }}>
-  //     <div className={styles.header}>
-  //       <h3 className={styles.name}>{item.name}</h3>
-  //       <span
-  //         className={styles.rarity}
-  //         style={{ color: RARITY_COLORS[item.rarity] }}
-  //       >
-  //         {item.rarity}
-  //       </span>
-  //     </div>
-  //     <div className={styles.quantity}>
-  //       Quantity: {item.quantity}
-  //     </div>
-  //   </div>
-  // );
 }
