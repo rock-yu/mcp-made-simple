@@ -6,20 +6,75 @@ interface ItemCardProps {
 }
 
 export function ItemCard({ item }: ItemCardProps) {
+
   return (
-    <div className={styles.card} style={{ borderColor: RARITY_COLORS[item.rarity] }}>
+    <div className={styles.card}>
       <div className={styles.header}>
         <h3 className={styles.name}>{item.name}</h3>
-        <span 
-          className={styles.rarity}
-          style={{ color: RARITY_COLORS[item.rarity] }}
-        >
-          {item.rarity}
-        </span>
       </div>
       <div className={styles.quantity}>
         Quantity: {item.quantity}
       </div>
     </div>
   );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Version with rarity
+  // return (
+  //   <div className={styles.card} style={{ borderColor: RARITY_COLORS[item.rarity] }}>
+  //     <div className={styles.header}>
+  //       <h3 className={styles.name}>{item.name}</h3>
+  //       <span
+  //         className={styles.rarity}
+  //         style={{ color: RARITY_COLORS[item.rarity] }}
+  //       >
+  //         {item.rarity}
+  //       </span>
+  //     </div>
+  //     <div className={styles.quantity}>
+  //       Quantity: {item.quantity}
+  //     </div>
+  //   </div>
+  // );
 }
