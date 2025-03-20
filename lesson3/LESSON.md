@@ -3,15 +3,17 @@
 This lesson demonstrates how to build a game inventory system that evolves from a simple in-memory database to a full Supabase implementation with MCP tools.
 
 ## Prerequisites
+
 - Node.js and npm
 - Supabase account
-- IDE with MCP support (Windsurf recommended)
-- Basic TypeScript knowledge
+- IDE with MCP support (Windsurf or Cursor)
 - [Python 3.12](https://www.python.org/downloads/release/python-3120/) or newer (required for Supabase MCP server)
-- pipx or uv (for Supabase MCP server installation)
+- pipx
 
 ## MCP Server Setup
+
 1. Verify Python version (required by [Supabase MCP server](https://github.com/alexander-zuev/supabase-mcp-server)):
+
    ```bash
    # Try both commands - one of them should work
    python --version   # Should be 3.12 or newer
@@ -20,9 +22,8 @@ This lesson demonstrates how to build a game inventory system that evolves from 
 
    If Python 3.12+ is not installed, download it from [python.org](https://www.python.org/downloads/release/python-3120/) and ensure it's added to PATH during installation.
 
-2. Choose your installation method:
+2. Install pipx and supabase-mcp-server
 
-   Option A - Using pipx (Recommended):
    ```bash
    # Install and configure pipx
    python -m pip install --user pipx
@@ -32,24 +33,14 @@ This lesson demonstrates how to build a game inventory system that evolves from 
    pipx install supabase-mcp-server
    ```
 
-   Option B - Using uv:
-   ```bash
-   # Install uv
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-
-   # Install Supabase MCP
-   uv pip install supabase-mcp-server
-   ```
-
-3. Configure MCP servers in Windsurf:
-   - Default MCP server for basic operations
-   - Supabase MCP server for database operations (port 7701)
+3. Configure MCP servers in Windsurf or Cusor using the `mcp.json` file
 
 ## Stage 1: In-Memory Database
 
 We start with a simple React app using an in-memory database for rapid prototyping:
 
 ### Data Model
+
 ```typescript
 interface GameItem {
   id: string;
@@ -60,18 +51,20 @@ interface GameItem {
 ```
 
 ### Demo Data Structure
+
 Located in `src/api/dummy.tsx`:
+
 ```typescript
 export const DEMO_ITEMS: GameItem[] = [
   {
-    id: '1',
-    name: 'Wooden Sword',
+    id: "1",
+    name: "Wooden Sword",
     quantity: 1,
     created_at: new Date().toISOString(),
   },
   {
-    id: '2',
-    name: 'Health Potion',
+    id: "2",
+    name: "Health Potion",
     quantity: 5,
     created_at: new Date().toISOString(),
   },
@@ -79,6 +72,7 @@ export const DEMO_ITEMS: GameItem[] = [
 ```
 
 ### Project Structure
+
 ```
 app/
 ├── src/
@@ -91,6 +85,7 @@ app/
 ```
 
 ### Running the App
+
 ```bash
 cd app
 npm install
@@ -102,6 +97,7 @@ npm run dev
 ### Database Setup
 
 1. Create Tables and Policies
+
    ```sql
    -- Create items table with proper constraints
    CREATE TABLE items (
@@ -127,6 +123,7 @@ npm run dev
    ```
 
 2. Configure Environment Variables:
+
    ```bash
    # Copy the example env file
    cp .env.example .env
@@ -137,56 +134,59 @@ npm run dev
    ```
 
 ### Supabase Client Setup
+
 ```typescript
 // src/lib/supabase.ts
-import { createClient } from '@supabase/supabase-js'
-import type { Database } from './database.types'
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "./database.types";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseKey)
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 ```
 
 ### Transitioning from Demo Data
+
 Update your data access to use Supabase:
 
 ```typescript
 // src/api/items.ts
-import { supabase } from '../lib/supabase'
-import type { GameItem } from './model'
+import { supabase } from "../lib/supabase";
+import type { GameItem } from "./model";
 
 export async function getItems(): Promise<GameItem[]> {
   const { data, error } = await supabase
-    .from('items')
-    .select('*')
-    .order('created_at')
+    .from("items")
+    .select("*")
+    .order("created_at");
 
   if (error) {
-    console.error('Error fetching items:', error)
+    console.error("Error fetching items:", error);
     // Fallback to demo data if Supabase is not configured
-    return DEMO_ITEMS
+    return DEMO_ITEMS;
   }
 
-  return data
+  return data;
 }
 ```
 
 ### TypeScript Integration
+
 ```typescript
 export interface Database {
   public: {
     Tables: {
       items: {
         Row: {
-          id: string
-          name: string
-          quantity: number
-          created_at: string
-        }
-      }
-    }
-  }
+          id: string;
+          name: string;
+          quantity: number;
+          created_at: string;
+        };
+      };
+    };
+  };
 }
 ```
 
@@ -195,26 +195,38 @@ export interface Database {
 Now we'll use MCP tools to analyze our inventory data:
 
 ### Supabase MCP Configuration
-1. Set up environment variables for the MCP server:
-   ```bash
-   # Create global config directory
-   # On Windows (PowerShell)
-   mkdir -Force "$env:APPDATA\supabase-mcp"
 
-   # Create and edit .env file
-   notepad "$env:APPDATA\supabase-mcp\.env"
-   ```
+Add your Supabase configuration, or just copy what's in `mcp.json`
 
-2. Add your Supabase configuration:
-   ```bash
-   SUPABASE_PROJECT_REF=your-project-ref
-   SUPABASE_DB_PASSWORD=your-db-password
-   SUPABASE_REGION=us-east-1  # Check your project's region in Supabase dashboard
-   SUPABASE_ACCESS_TOKEN=your-access-token
-   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-   ```
+```bash
+SUPABASE_PROJECT_REF=your-project-ref
+SUPABASE_DB_PASSWORD=your-db-password
+SUPABASE_REGION=us-east-1  # Check your project's region in Supabase dashboard
+SUPABASE_ACCESS_TOKEN=your-access-token
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
+
+List of regions as follows:
+
+us-west-1 - West US (North California)
+us-east-1 - East US (North Virginia) - default
+us-east-2 - East US (Ohio)
+ca-central-1 - Canada (Central)
+eu-west-1 - West EU (Ireland)
+eu-west-2 - West Europe (London)
+eu-west-3 - West EU (Paris)
+eu-central-1 - Central EU (Frankfurt)
+eu-central-2 - Central Europe (Zurich)
+eu-north-1 - North EU (Stockholm)
+ap-south-1 - South Asia (Mumbai)
+ap-southeast-1 - Southeast Asia (Singapore)
+ap-northeast-1 - Northeast Asia (Tokyo)
+ap-northeast-2 - Northeast Asia (Seoul)
+ap-southeast-2 - Oceania (Sydney)
+sa-east-1 - South America (São Paulo)
 
 ### Basic Queries
+
 ```sql
 -- Get total items count
 SELECT COUNT(*) FROM items;
@@ -230,12 +242,15 @@ WHERE created_at > NOW() - INTERVAL '24 hours';
 ```
 
 ### Summary Tools
+
 Create MCP tools to analyze:
+
 - Total inventory count
 - Items by creation date
 - Quantity distribution
 
 ### Inventory Analysis
+
 Using MCP, we can create more sophisticated queries:
 
 ```sql
@@ -272,6 +287,7 @@ ORDER BY item_count DESC;
 ```
 
 ### Real-time Monitoring
+
 Set up continuous monitoring:
 
 ```sql
@@ -295,6 +311,7 @@ LIMIT 5;
 ```
 
 These queries form the foundation for our MCP tools, allowing us to:
+
 1. Track inventory health
 2. Monitor stock levels
 3. Analyze item distribution
@@ -303,15 +320,18 @@ These queries form the foundation for our MCP tools, allowing us to:
 ## Stage 4: Schema Evolution with Supabase MCP
 
 ### Adding Rarity System
+
 Use Supabase MCP to implement a comprehensive rarity system:
 
 1. Enable unsafe mode for schema changes:
+
    ```sql
    -- Schema changes require unsafe mode
    SELECT live_dangerously('database', true);
    ```
 
 2. Define Rarity Enum:
+
    ```sql
    -- Create enum type for rarity
    CREATE TYPE item_rarity AS ENUM (
@@ -324,6 +344,7 @@ Use Supabase MCP to implement a comprehensive rarity system:
    ```
 
 3. Add and Populate Rarity:
+
    ```sql
    -- Add rarity column
    ALTER TABLE items
@@ -358,6 +379,7 @@ Use Supabase MCP to implement a comprehensive rarity system:
    ```
 
 4. Make Rarity Required:
+
    ```sql
    -- Add NOT NULL constraint
    ALTER TABLE items
@@ -371,7 +393,9 @@ Use Supabase MCP to implement a comprehensive rarity system:
    ```
 
 ### Safety Considerations
+
 When using Supabase MCP for schema changes:
+
 1. Always start in safe mode (read-only)
 2. Enable unsafe mode only for schema modifications
 3. Return to safe mode after changes
@@ -379,9 +403,11 @@ When using Supabase MCP for schema changes:
 5. Test changes in development first
 
 ### Error Handling and Fallbacks
+
 Implement robust error handling for schema changes:
 
 1. TypeScript Error Types:
+
 ```typescript
 // src/api/errors.ts
 export type DatabaseError = {
@@ -397,62 +423,66 @@ export type ItemOperationResult<T> = {
 ```
 
 2. Graceful Fallbacks:
+
 ```typescript
 // src/api/items.ts
-import { DEMO_ITEMS } from './dummy';
-import { supabase } from '../lib/supabase';
-import type { GameItem, ItemOperationResult } from './model';
+import { DEMO_ITEMS } from "./dummy";
+import { supabase } from "../lib/supabase";
+import type { GameItem, ItemOperationResult } from "./model";
 
 export async function getItems(): Promise<ItemOperationResult<GameItem[]>> {
   try {
     const { data, error } = await supabase
-      .from('items')
-      .select('*')
-      .order('created_at');
+      .from("items")
+      .select("*")
+      .order("created_at");
 
     if (error) {
-      console.error('Database error:', error);
+      console.error("Database error:", error);
       return {
         data: DEMO_ITEMS,
         error: {
           code: error.code,
-          message: 'Using demo data due to database error',
-          details: error.message
-        }
+          message: "Using demo data due to database error",
+          details: error.message,
+        },
       };
     }
 
     return { data, error: null };
   } catch (e) {
-    console.error('Unexpected error:', e);
+    console.error("Unexpected error:", e);
     return {
       data: DEMO_ITEMS,
       error: {
-        code: 'UNEXPECTED_ERROR',
-        message: 'Using demo data due to unexpected error',
-        details: e instanceof Error ? e.message : String(e)
-      }
+        code: "UNEXPECTED_ERROR",
+        message: "Using demo data due to unexpected error",
+        details: e instanceof Error ? e.message : String(e),
+      },
     };
   }
 }
 
-export async function addItem(item: Omit<GameItem, 'id' | 'created_at'>): Promise<ItemOperationResult<GameItem>> {
+export async function addItem(
+  item: Omit<GameItem, "id" | "created_at">
+): Promise<ItemOperationResult<GameItem>> {
   try {
     const { data, error } = await supabase
-      .from('items')
+      .from("items")
       .insert([item])
       .select()
       .single();
 
     if (error) {
-      if (error.code === '23503') { // Foreign key violation
+      if (error.code === "23503") {
+        // Foreign key violation
         return {
           data: null,
           error: {
-            code: 'INVALID_RARITY',
-            message: 'Invalid rarity value',
-            details: error.message
-          }
+            code: "INVALID_RARITY",
+            message: "Invalid rarity value",
+            details: error.message,
+          },
         };
       }
 
@@ -460,9 +490,9 @@ export async function addItem(item: Omit<GameItem, 'id' | 'created_at'>): Promis
         data: null,
         error: {
           code: error.code,
-          message: 'Failed to add item',
-          details: error.message
-        }
+          message: "Failed to add item",
+          details: error.message,
+        },
       };
     }
 
@@ -471,21 +501,22 @@ export async function addItem(item: Omit<GameItem, 'id' | 'created_at'>): Promis
     return {
       data: null,
       error: {
-        code: 'UNEXPECTED_ERROR',
-        message: 'Failed to add item due to unexpected error',
-        details: e instanceof Error ? e.message : String(e)
-      }
+        code: "UNEXPECTED_ERROR",
+        message: "Failed to add item due to unexpected error",
+        details: e instanceof Error ? e.message : String(e),
+      },
     };
   }
 }
 ```
 
 3. React Component Usage:
+
 ```typescript
 // src/components/Inventory.tsx
-import { useEffect, useState } from 'react';
-import { getItems } from '../api/items';
-import type { GameItem } from '../api/model';
+import { useEffect, useState } from "react";
+import { getItems } from "../api/items";
+import type { GameItem } from "../api/model";
 
 export function Inventory() {
   const [items, setItems] = useState<GameItem[]>([]);
@@ -511,18 +542,14 @@ export function Inventory() {
 
   return (
     <div className="inventory">
-      {error && (
-        <div className="alert alert-warning">
-          {error}
-        </div>
-      )}
+      {error && <div className="alert alert-warning">{error}</div>}
       {isDemo && (
         <div className="alert alert-info">
           Using demo data - some features may be limited
         </div>
       )}
       <div className="items-grid">
-        {items.map(item => (
+        {items.map((item) => (
           <ItemCard key={item.id} item={item} />
         ))}
       </div>
@@ -532,6 +559,7 @@ export function Inventory() {
 ```
 
 This error handling system provides:
+
 1. Type-safe error reporting
 2. Graceful fallbacks to demo data
 3. Clear user feedback
@@ -539,9 +567,11 @@ This error handling system provides:
 5. Recovery strategies
 
 ### Testing Schema Changes
+
 Before applying schema changes to production:
 
 1. Test Database Connection:
+
 ```sql
 -- Verify MCP connection
 SELECT current_database(), current_user;
@@ -555,6 +585,7 @@ SELECT EXISTS (
 ```
 
 2. Test Rarity Enum:
+
 ```sql
 -- Insert test items with different rarities
 INSERT INTO items (name, quantity, rarity) VALUES
@@ -576,43 +607,45 @@ ORDER BY rarity;
 ```
 
 3. Test Error Handling:
+
 ```typescript
 // src/tests/items.test.ts
-import { getItems, addItem } from '../api/items';
+import { getItems, addItem } from "../api/items";
 
-describe('Item Operations', () => {
-  test('getItems falls back to demo data on error', async () => {
+describe("Item Operations", () => {
+  test("getItems falls back to demo data on error", async () => {
     // Temporarily break database connection
-    process.env.SUPABASE_URL = 'invalid-url';
+    process.env.SUPABASE_URL = "invalid-url";
 
     const result = await getItems();
     expect(result.error).not.toBeNull();
     expect(result.data).toEqual(DEMO_ITEMS);
-    expect(result.error?.code).toBe('UNEXPECTED_ERROR');
+    expect(result.error?.code).toBe("UNEXPECTED_ERROR");
   });
 
-  test('addItem validates rarity', async () => {
+  test("addItem validates rarity", async () => {
     const result = await addItem({
-      name: 'Test Item',
+      name: "Test Item",
       quantity: 1,
-      rarity: 'invalid' as any
+      rarity: "invalid" as any,
     });
 
     expect(result.error).not.toBeNull();
-    expect(result.error?.code).toBe('INVALID_RARITY');
+    expect(result.error?.code).toBe("INVALID_RARITY");
   });
 });
 ```
 
 4. Verify UI Feedback:
+
 ```typescript
 // src/tests/Inventory.test.tsx
-import { render, screen, waitFor } from '@testing-library/react';
-import { Inventory } from '../components/Inventory';
+import { render, screen, waitFor } from "@testing-library/react";
+import { Inventory } from "../components/Inventory";
 
-test('shows demo data notice on error', async () => {
+test("shows demo data notice on error", async () => {
   // Mock database error
-  jest.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('Network error'));
+  jest.spyOn(global, "fetch").mockRejectedValueOnce(new Error("Network error"));
 
   render(<Inventory />);
 
@@ -624,6 +657,7 @@ test('shows demo data notice on error', async () => {
 ```
 
 5. Migration Verification:
+
 ```sql
 -- Check migration status
 SELECT version, name, applied_at
@@ -638,25 +672,27 @@ WHERE applied_at IS NULL;
 ```
 
 ### TypeScript Integration
+
 ```typescript
 export interface Database {
   public: {
     Tables: {
       items: {
         Row: {
-          id: string
-          name: string
-          quantity: number
-          created_at: string
-          rarity: string
-        }
-      }
-    }
-  }
+          id: string;
+          name: string;
+          quantity: number;
+          created_at: string;
+          rarity: string;
+        };
+      };
+    };
+  };
 }
 ```
 
 ### Rarity Analysis
+
 New MCP queries for rarity insights:
 
 ```sql
@@ -705,12 +741,15 @@ ORDER BY rarity DESC, quantity;
 ```
 
 ### Migration Management
+
 Supabase MCP automatically versions all schema changes. Each change is tracked with:
+
 1. Timestamp prefix (YYYYMMDDHHMMSS)
 2. Descriptive name
 3. Up and down migrations
 
 Example migration names for our changes:
+
 ```sql
 -- Stage 2: Initial Setup
 20250319000001_create_items_table
@@ -723,6 +762,7 @@ Example migration names for our changes:
 ```
 
 View migrations using MCP:
+
 ```sql
 -- List all migrations
 SELECT version, name, applied_at
@@ -736,10 +776,12 @@ WHERE applied_at IS NULL;
 ```
 
 ### Learning Outcomes
+
 1. Progressive enhancement approach
 2. In-memory to database migration
 3. MCP tool usage for database operations
 4. Schema evolution best practices
 
 ## Video Tutorial
+
 Coming soon! This tutorial will be part of our MCP learning series.
