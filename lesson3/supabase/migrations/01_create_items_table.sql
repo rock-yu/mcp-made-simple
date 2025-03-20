@@ -16,18 +16,18 @@ CREATE POLICY "Allow public read access"
   TO public
   USING (true);
 
--- Create a policy that allows authenticated users to insert items
-CREATE POLICY "Allow authenticated users to insert"
+-- Create a policy that allows public to insert items
+CREATE POLICY "Allow public insert access"
   ON items
   FOR INSERT
-  TO authenticated
+  TO public
   WITH CHECK (true);
 
--- Create a policy that allows authenticated users to update their items
-CREATE POLICY "Allow authenticated users to update"
+-- Create a policy that allows public to update items
+CREATE POLICY "Allow public update access"
   ON items
   FOR UPDATE
-  TO authenticated
+  TO public
   USING (true)
   WITH CHECK (true);
 

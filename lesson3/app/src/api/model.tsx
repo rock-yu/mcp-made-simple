@@ -14,6 +14,8 @@ export type ItemOperationResult<T> = {
   error: DatabaseError | null;
 };
 
+export type ItemRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
+
 /**
  * The core model for a game item.
  */
@@ -22,4 +24,5 @@ export interface GameItem {
   name: string;
   quantity: number;
   created_at: string;
+  rarity?: ItemRarity;
 }

@@ -23,7 +23,7 @@ export function Inventory() {
       setIsDemo(false);
 
       // Check if Supabase is configured
-      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY || !supabase) {
         setItems(DEMO_ITEMS);
         setError('⚠️ Using demo data - Supabase not configured');
         setIsDemo(true);
@@ -52,14 +52,46 @@ export function Inventory() {
 
       setItems(data);
     } catch (err) {
-      console.error('Error fetching items:', err);
       setItems(DEMO_ITEMS);
       setError('⚠️ Unexpected error - Using demo data');
       setIsDemo(true);
+      console.error('Error:', err);
     } finally {
       setLoading(false);
     }
   }
+
+  const handleBuy = async (itemId: string) => {
+    try {
+      const item = items.find(i => i.id === itemId);
+      if (!item || item.quantity <= 0) return;
+
+      if (isDemo || !supabase) {
+        // Handle demo data locally
+        setItems(items.map(i => 
+          i.id === itemId ? { ...i, quantity: i.quantity - 1 } : i
+        ));
+        return;
+      }
+
+      const { error: updateError } = await supabase
+        .from('items')
+        .update({ quantity: item.quantity - 1 })
+        .eq('id', itemId);
+
+      if (updateError) {
+        console.error('Error updating item:', updateError);
+        return;
+      }
+
+      // Update local state
+      setItems(items.map(i => 
+        i.id === itemId ? { ...i, quantity: i.quantity - 1 } : i
+      ));
+    } catch (err) {
+      console.error('Error buying item:', err);
+    }
+  };
 
   if (loading) {
     return (
@@ -103,7 +135,11 @@ export function Inventory() {
       )}
       <div className={styles.grid}>
         {items.map(item => (
-          <ItemCard key={item.id} item={item} />
+          <ItemCard 
+            key={item.id} 
+            item={item}
+            onBuy={handleBuy}
+          />
         ))}
       </div>
     </div>
