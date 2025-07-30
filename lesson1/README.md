@@ -21,6 +21,7 @@ server/
 ## Key Components
 
 1. **Server Setup** (`index.ts`)
+
    - Creates an MCP server instance
    - Defines tool list
    - Implements tool call handlers
@@ -33,6 +34,7 @@ server/
 ## Building the Server
 
 1. Install dependencies:
+
    ```bash
    cd server
    npm install
@@ -44,22 +46,38 @@ server/
    ```
 
 This will:
+
 - Compile TypeScript to JavaScript
 - Make the output executable
 - Generate files in the `build/` directory
 
+3. Run the MCP server
+
+   ```
+   node build/index.js
+   ```
+
+4. Inspect the server (replace `${path}`) using [Inspector](https://github.com/modelcontextprotocol/inspector)
+
+   ```
+   npx @modelcontextprotocol/inspector node ${path}/mcp-made-simple/lesson1/server/build/index.js
+   ```
+
 ## Using in Different IDEs
 
 ### Cursor
+
 1. Install the MCP extension
 2. Point to your built server in the MCP settings
 3. The greeting tool will be available in your AI commands
 
 ### Windsurf
+
 1. Configure the MCP server path in settings
 2. The greeting functionality will be accessible through Cascade
 
 ### VS Code
+
 1. Install the MCP extension for VS Code
 2. Configure the extension to use your built server
 3. Access the greeting tool through the command palette
